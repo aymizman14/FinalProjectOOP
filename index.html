@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <title>ShimmerNest</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe6f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            background-color: #ff66b2;
+            padding: 15px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        header h1 {
+          color: white;
+          font-size: 2.0rem; /* Increased font size for header text */
+          font-family: 'Lobster', cursive; /* Changed font to Lobster */
+          display: inline-block; /* Align the title and icon in a single line */
+          animation: glow 1.5s infinite alternate; /* Add glowing effect */
+        }
+        @keyframes glow {
+          0% {
+            text-shadow: 0 0 5px #ffccff, 0 0 10px #ff66b2, 0 0 15px #ff66b2;
+          }
+          100% {
+            text-shadow: 0 0 20px #ffccff, 0 0 30px #ff66b2, 0 0 40px #ff66b2;
+          }
+        }
+
+        .brand-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .brand-links a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #ff99cc;
+            border-radius: 5px;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        .brand-links a:hover {
+            background-color: #ff4d94;
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ff99cc;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            min-width: 150px;
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ff4d94;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1600px;
+        }
+
+        .product-box {
+            background: linear-gradient(135deg, #ffccdd, #ffe6f2);
+            border: 1px solid #ff66b2; /* Outline color */
+            border-radius: 8px;
+            width: 350px; /* Fixed width */
+            height: 350px; /* Fixed height to make it square */
+            padding: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .product-box h4 {
+            margin: 5px 0;
+            color: #ff66b2;
+            font-size: 1em;
+            text-transform: uppercase;
+        }
+
+        .product-details {
+            flex-grow: 1;
+            margin: 10px 0;
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.4;
+            text-align: left; /* Aligns text to the left */
+        }
+
+        .product-details div {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .product-box img {
+            width: 100px;
+            height: 100px; /* Fixed image size for consistency */
+            margin: 10px 0;
+            border-radius: 5px;
+            object-fit: cover; /* Ensures the image fills the space without distortion */
+        }
+
+        footer {
+            width: 100%;
+            text-align: center;
+            background-color: #ff66b2;
+            padding: 10px 0;
+            color: white;
+            font-size: 0.8em;
+            margin-top: auto;
+        }
+        .heart-button {
+            font-size: 24px;
+            color: #ff4d94;           /* Default heart color */
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .heart-button.favourited {
+            color: #ff0066;           /* Color when favourited */
+        }
+        .favorite-list-box {
+            position: absolute;
+            right: 20px;
+            top: 30px;
+            display: inline-block;
+            padding: 15px 20px;
+            background-color: #ffffff;
+            color: #ff66b2;
+            border: 2px solid #ff66b2;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1em;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .favorite-list-box:hover {
+            background-color: #ff99cc;
+            color: #ffffff;
+        }
+
+        .brand-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .brand-links a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #ff99cc;
+            border-radius: 5px;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        .brand-links a:hover {
+            background-color: #ff4d94;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ShimmerNest</h1>
+        <a href="favorite.html" class="favorite-list-box">Favorite List</a>
+        <div class="brand-links">
+            <a href="#" onclick="fetchProducts()">Show All Products</a>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown('nyx')">NYX</a>
+                <div class="dropdown-content" id="nyx-dropdown">
+                    <a href="#" onclick="fetchProducts('nyx', 'mascara')">Mascara</a>
+                    <a href="#" onclick="fetchProducts('nyx', 'eyebrow')">Eyebrow</a>
+                    <a href="#" onclick="fetchProducts('nyx', 'eyeliner')">Eyeliner</a>
+                    <a href="#" onclick="fetchProducts('nyx', 'foundation')">Foundation</a>
+                    <a href="#" onclick="fetchProducts('nyx', 'bronzer')">Bronzer</a>
+                    <a href="#" onclick="fetchProducts('nyx', 'blush')">Blush</a>
+                    <a href="#" onclick="fetchProducts('nyx', 'lip_liner')">Lip Liner</a>
+                    <a href="#" onclick="fetchProducts('nyx', 'lipstick')">Lipstick</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown('clinique')">Clinique</a>
+                <div class="dropdown-content" id="clinique-dropdown">
+                    <a href="#" onclick="fetchProducts('clinique', 'foundation')">Foundation</a>
+                    <a href="#" onclick="fetchProducts('clinique', 'eyeshadow')">Eyeshadow</a>
+                    <a href="#" onclick="fetchProducts('clinique', 'eyeliner')">Eyeliner</a>
+                    <a href="#" onclick="fetchProducts('clinique', 'eyebrow')">Eyebrow</a>
+                    <a href="#" onclick="fetchProducts('clinique', 'bronzer')">Bronzer</a>
+                    <a href="#" onclick="fetchProducts('clinique', 'blush')">Blush</a>
+                    <a href="#" onclick="fetchProducts('clinique', 'lipstick')">Lipstick</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown('dior')">Dior</a>
+                <div class="dropdown-content" id="dior-dropdown">
+                    <a href="#" onclick="fetchProducts('dior', 'nail_polish')">Nail Polish</a>
+                    <a href="#" onclick="fetchProducts('dior', 'eyebrow')">Eyebrow</a>
+                    <a href="#" onclick="fetchProducts('dior', 'eyeliner')">Eyeliner</a>
+                    <a href="#" onclick="fetchProducts('dior', 'mascara')">Mascara</a>
+                    <a href="#" onclick="fetchProducts('dior', 'eyeshadow')">Eyeshadow</a>
+                    <a href="#" onclick="fetchProducts('dior', 'blush')">Blush</a>
+                    <a href="#" onclick="fetchProducts('dior', 'bronzer')">Bronzer</a>
+                    <a href="#" onclick="fetchProducts('dior', 'foundation')">Foundation</a>
+                    <a href="#" onclick="fetchProducts('dior', 'lipstick')">Lipstick</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown('iman')">Iman</a>
+                <div class="dropdown-content" id="iman-dropdown">
+                    <a href="#" onclick="fetchProducts('iman', 'foundation')">Foundation</a>
+                    <a href="#" onclick="fetchProducts('iman', 'blush')">Blush</a>
+                    <a href="#" onclick="fetchProducts('iman', 'mascara')">Mascara</a>
+                    <a href="#" onclick="fetchProducts('iman', 'eyebrow')">Eyebrow</a>
+                    <a href="#" onclick="fetchProducts('iman', 'eyeliner')">Eyeliner</a>
+                    <a href="#" onclick="fetchProducts('iman', 'lipstick')">Lipstick</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown('benefit')">Benefit</a>
+                <div class="dropdown-content" id="benefit-dropdown">
+                    <a href="#" onclick="fetchProducts('benefit', 'foundation')">Foundation</a>
+                    <a href="#" onclick="fetchProducts('benefit', 'bronzer')">Bronzer</a>
+                    <a href="#" onclick="fetchProducts('benefit', 'eyebrow')">Eyebrow</a>
+                    <a href="#" onclick="fetchProducts('benefit', 'lipstick')">Lipstick</a>
+                    <a href="#" onclick="fetchProducts('benefit', 'mascara')">Mascara</a>
+                    <a href="#" onclick="fetchProducts('benefit', 'eyeliner')">Eyeliner</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown('smashbox')">SmashBox</a>
+                <div class="dropdown-content" id="smashbox-dropdown">
+                    <a href="#" onclick="fetchProducts('smashbox', 'bronzer')">Bronzer</a>
+                    <a href="#" onclick="fetchProducts('smashbox', 'blush')">Blush</a>
+                    <a href="#" onclick="fetchProducts('smashbox', 'eyebrow')">Eyebrow</a>
+                    <a href="#" onclick="fetchProducts('smashbox', 'foundation')">Foundation</a>
+                    <a href="#" onclick="fetchProducts('smashbox', 'mascara')">Mascara</a>
+                    <a href="#" onclick="fetchProducts('smashbox', 'eyeliner')">Eyeliner</a>
+                    <a href="#" onclick="fetchProducts('smashbox', 'eyeshadow')">Eyeshadow</a>
+                    <a href="#" onclick="fetchProducts('smashbox', 'lipstick')">Lipstick</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown('maybelline')">Maybelline</a>
+                <div class="dropdown-content" id="maybelline-dropdown">
+                    <a href="#" onclick="fetchProducts('maybelline', 'bronzer')">Bronzer</a>
+                    <a href="#" onclick="fetchProducts('maybelline', 'blush')">Blush</a>
+                    <a href="#" onclick="fetchProducts('maybelline', 'foundation')">Foundation</a>
+                    <a href="#" onclick="fetchProducts('maybelline', 'eyeshadow')">Eyeshadow</a>
+                    <a href="#" onclick="fetchProducts('maybelline', 'eyeliner')">Eyeliner</a>
+                    <a href="#" onclick="fetchProducts('maybelline', 'nail_polish')">Nail Polish</a>
+                    <a href="#" onclick="fetchProducts('maybelline', 'lipstick')">Lipstick</a>
+                    <a href="#" onclick="fetchProducts('maybelline', 'mascara')">Mascara</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown('covergirl')">Covergirl</a>
+                <div class="dropdown-content" id="covergirl-dropdown">
+                    <a href="#" onclick="fetchProducts('covergirl', 'mascara')">Mascara</a>
+                    <a href="#" onclick="fetchProducts('covergirl', 'lipstick')">Lipstick</a>
+                    <a href="#" onclick="fetchProducts('covergirl', 'nail_polish')">Nail Polish</a>
+                    <a href="#" onclick="fetchProducts('covergirl', 'eyeshadow')">Eyeshadow</a>
+                    <a href="#" onclick="fetchProducts('covergirl', 'eyeliner')">Eyeliner</a>
+                    <a href="#" onclick="fetchProducts('covergirl', 'foundation')">Foundation</a>
+                    <a href="#" onclick="fetchProducts('covergirl', 'lip_liner')">Lip Liner</a>
+                    <a href="#" onclick="fetchProducts('covergirl', 'blush')">Blush</a>
+                    <a href="#" onclick="fetchProducts('covergirl', 'bronzer')">Bronzer</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown('wet n wild')">Wet N Wild</a>
+                <div class="dropdown-content" id="wet n wild-dropdown">
+                    <a href="#" onclick="fetchProducts('wet n wild', 'mascara')">Mascara</a>
+                    <a href="#" onclick="fetchProducts('wet n wild', 'lipstick')">Lipstick</a>
+                    <a href="#" onclick="fetchProducts('wet n wild', 'nail_polish')">Nail Polish</a>
+                    <a href="#" onclick="fetchProducts('wet n wild', 'eyeshadow')">Eyeshadow</a>
+                    <a href="#" onclick="fetchProducts('wet n wild', 'eyeliner')">Eyeliner</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown('revlon')">Revlon</a>
+                <div class="dropdown-content" id="revlon-dropdown">
+                    <a href="#" onclick="fetchProducts('revlon', 'lipstick')">Lipstick</a>
+                    <a href="#" onclick="fetchProducts('revlon', 'nail_polish')">Nail Polish</a>
+                    <a href="#" onclick="fetchProducts('revlon', 'foundation')">Foundation</a>
+                    <a href="#" onclick="fetchProducts('revlon', 'blush')">Blush</a>
+                    <a href="#" onclick="fetchProducts('revlon', 'lip_liner')">Lip Liner</a>
+                    
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown('e.l.f.')">E.L.F.</a>
+                <div class="dropdown-content" id="e.l.f.-dropdown">
+                    <a href="#" onclick="fetchProducts('e.l.f.', 'bronzer')">Bronzer</a>
+                    <a href="#" onclick="fetchProducts('e.l.f.', 'blush')">Blush</a>
+                    <a href="#" onclick="fetchProducts('e.l.f.', 'lip_liner')">Lip Liner</a>
+                    <a href="#" onclick="fetchProducts('e.l.f.', 'foundation')">Foundation</a>
+                    <a href="#" onclick="fetchProducts('e.l.f.', 'eyeshadow')">Eyeshadow</a>
+                    <a href="#" onclick="fetchProducts('e.l.f.', 'eyeliner')">Eyeliner</a>
+                    <a href="#" onclick="fetchProducts('e.l.f.', 'lipstick')">Lipstick</a>
+                    <a href="#" onclick="fetchProducts('e.l.f.', 'mascara')">Mascara</a>
+                    
+                </div>
+            </div>
+    </header>
+
+    <div class="product-container" id="products"></div>
+
+    <footer>
+        &copy; 2024 ShimmerNest. All Rights Reserved.
+    </footer>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include your CSS file -->
+</head>
+<body>
+    <!-- Your HTML content goes here -->
+    <div id="products"></div> <!-- Ensure you have this container for products -->
+
+    <script>
+        // Existing functions for dropdown and product fetching
+        function toggleDropdown(brand) {
+            const dropdown = document.getElementById(`${brand}-dropdown`);
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    
+            // Close the dropdown if clicked outside
+            window.onclick = function(event) {
+                if (!event.target.matches('.dropdown a')) {
+                    dropdown.style.display = 'none';
+                }
+            };
+        }
+    
+        function fetchProducts(brand = '', type = '') {
+            let url = 'https://makeup-api.herokuapp.com/api/v1/products.json';
+            
+            if (brand) {
+                url += `?brand=${brand}`;
+                if (type) {
+                    url += `&product_type=${type}`;
+                }
+            } else if (type) {
+                url += `?product_type=${type}`;
+            }
+    
+            fetch(url)
+                .then(response => response.json())
+                .then(products => {
+                    const productContainer = document.getElementById('products');
+                    productContainer.innerHTML = '';
+    
+                    if (products.length === 0) {
+                        productContainer.innerHTML = '<p>No products available at the moment.</p>';
+                        return;
+                    }
+    
+                    const numberOfProductsToDisplay = Math.min(products.length, 1000);
+                    for (let i = 0; i < numberOfProductsToDisplay; i++) {
+                        const product = products[i];
+                        const productBox = document.createElement('div');
+                        productBox.className = 'product-box';
+                        productBox.innerHTML = `
+                            <h4>${product.brand || 'Unknown Brand'}</h4>
+                            <div class="product-details">
+                                <div><strong>Name:</strong> ${product.name}</div>
+                                <div><strong>Type:</strong> ${product.product_type}</div>
+                                <div><strong>Price:</strong> $${product.price || 'N/A'}</div>
+                                <div><strong>Rating:</strong> ${product.rating || "N/A"}</div>
+                            </div>
+                            <a href="${product.product_link || '#'}" target="_blank">
+                                <img src="${product.image_link || 'fallback.jpg'}" alt="Product Image">
+                            </a>
+                            <button class="heart-button" onclick="toggleFavourite(this, '${product.id || 'unknown'}')">&#x2764;</button>
+                        `;
+                        productContainer.appendChild(productBox);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching products:', error);
+                    document.getElementById('products').innerHTML = '<p>Failed to load products. Please try again later.</p>';
+                });
+        }
+    
+        // Function for toggling heart-shaped favourite button
+        function toggleFavourite(button, productId) {
+            // Toggle "favourited" class to change the heart color
+            if (button.classList.contains("favourited")) {
+                button.classList.remove("favourited");
+                alert(`Product ${productId} removed from favourites.`);
+            } else {
+                button.classList.add("favourited");
+                alert(`Product ${productId} added to favourites!`);
+            }
+        }
+    
+        window.onload = () => fetchProducts();
+    </script>
+</body>
+</html>
+
+    
+
+

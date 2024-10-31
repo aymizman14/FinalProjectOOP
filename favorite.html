@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD File</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet"> <!-- Google Fonts -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #ffe6f2;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .header {
+      width: 100%;
+      background-color: #ff66b2;
+      padding: 2rem 0; /* Increased padding for a taller header */
+      text-align: center;
+      position: relative;
+    }
+
+    .header h1 {
+      color: white;
+      font-size: 2.5rem; /* Increased font size for header text */
+      font-family: 'Lobster', cursive; /* Changed font to Lobster */
+      display: inline-block; /* Align the title and icon in a single line */
+      animation: glow 1.5s infinite alternate; /* Add glowing effect */
+    }
+
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 5px #ffccff, 0 0 10px #ff66b2, 0 0 15px #ff66b2;
+      }
+      100% {
+        text-shadow: 0 0 20px #ffccff, 0 0 30px #ff66b2, 0 0 40px #ff66b2;
+      }
+    }
+
+    .home-icon {
+      position: absolute;
+      right: 20px; /* Adjust spacing from the right */
+      top: 30px; /* Adjust spacing from the top (increased value for lower position) */
+      color: white;
+      font-size: 1.5rem;
+      text-decoration: none; /* Remove underline */
+    }
+
+    .home-icon:hover {
+      color: #ffccff; /* Change to a light pink color when hovered */
+    }
+
+    .mainWrapper {
+      background-color: #ff99cc; /* Soft pink background */
+      padding: 3rem 2rem 2rem; /* Increased top padding */
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 100%;
+      margin: 10rem auto; /* Increased margin to push down the form */
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-family: 'Lobster', cursive; /* Apply Lobster font to labels */
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+      font-family: 'Lobster', cursive; /* Apply Lobster font to input fields */
+    }
+
+    textarea.form-control {
+      resize: vertical;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      padding: 0.75rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      color: white;
+      flex: 1;
+    }
+
+    .btn-default {
+      background-color: #ff66b2; /* Light pink color matching the mainWrapper */
+    }
+
+    .btn-default:hover {
+      background-color: #ff4d94; /* Darker shade on hover */
+    }
+
+    footer {
+      width: 100%;
+      text-align: center;
+      background-color: #ff66b2;
+      padding: 10px 0;
+      color: white;
+      font-size: 0.8em; /* Footer font size */
+      margin-top: auto; /* Push footer to the bottom */
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <h1>ShimmerNest</h1>
+    <a href="index.html" class="home-icon"><i class="fas fa-home"></i></a> <!-- Home icon -->
+  </div>
+
+  <div class="mainWrapper">
+    <form>
+      <div class="form-group">
+        <label for="fileName">File Name</label>
+        <input id="fileName" type="text" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="fileContents">Content</label>
+        <textarea id="fileContents" class="form-control" rows="5"></textarea>
+      </div>
+    </form>
+
+    <div class="button-group">
+      <button id="btnCreate" class="btn btn-default">Create</button>
+      <button id="btnRead" class="btn btn-default">Read</button>
+      <button id="btnDelete" class="btn btn-default">Delete</button>
+      <button id="btnUpdate" class="btn btn-default">Update</button>
+    </div>
+  </div>
+  
+  <footer>
+    &copy; 2024 ShimmerNest. All Rights Reserved.
+  </footer>
+
+  <script src="crud.js"></script>
+</body>
+</html>
